@@ -15,7 +15,69 @@
 .consent-choice input{margin:2px 0 0;flex:0 0 auto;width:17px;height:17px;accent-color:#16823a;cursor:pointer}
 .navlinks .consent-purchase{max-width:235px}.navlinks .consent-choice{font-size:10px}
 .cta .consent-choice{color:#e3f2e7}
-.consent-choice a{color:inherit;text-decoration:underline;font-weight:700}</style></head><body>
+.consent-choice a{color:inherit;text-decoration:underline;font-weight:700}</style>
+<!-- Meta Pixel: uruchamiany wyłącznie po zgodzie marketingowej -->
+<script>
+(function () {
+  'use strict';
+  var consentKey = 'prostowiedza_meta_consent_v1';
+  var started = false;
+  function readConsent() {
+    try { return localStorage.getItem(consentKey); } catch (e) { return null; }
+  }
+  function saveConsent(value) {
+    try { localStorage.setItem(consentKey, value); } catch (e) { /* bez trwałego zapisu */ }
+  }
+  function startPixel() {
+    if (started) return;
+    started = true;
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2106520813318074');
+    fbq('track', 'PageView');
+  }
+  function updateBanner() {
+    var banner = document.getElementById('meta-consent-banner');
+    if (banner) banner.hidden = readConsent() !== null;
+  }
+  window.prostowiedzaMetaConsent = function(value) {
+    saveConsent(value ? 'yes' : 'no');
+    if (value) startPixel();
+    updateBanner();
+  };
+  window.prostowiedzaOpenPrivacySettings = function() {
+    var banner = document.getElementById('meta-consent-banner');
+    if (banner) banner.hidden = false;
+  };
+  if (readConsent() === 'yes') startPixel();
+  document.addEventListener('DOMContentLoaded', updateBanner);
+})();
+</script>
+<style>
+#meta-consent-banner[hidden]{display:none!important}
+#meta-consent-banner{position:fixed;z-index:1000;bottom:16px;left:16px;right:16px;max-width:680px;margin:auto;padding:20px 22px;background:#fff;border:1px solid #cbdccc;border-radius:16px;box-shadow:0 12px 42px #102b2040;color:#18352a;font-size:14px;line-height:1.55}
+#meta-consent-banner p{margin:6px 0 14px}
+.meta-consent-actions{display:flex;gap:10px;flex-wrap:wrap}
+.meta-consent-actions button{padding:11px 17px;border-radius:9px;border:1px solid #277b3c;font-weight:700;cursor:pointer;background:white;color:#18352a}
+.meta-consent-actions button:first-child{background:#277b3c;color:white}
+.meta-privacy-link{color:#277b3c}
+</style>
+</head><body>
+
+<div id="meta-consent-banner" role="region" aria-label="Ustawienia prywatności" hidden>
+  <strong>Pliki cookies i reklamy</strong>
+  <p>Za Twoją zgodą używamy Meta Pixel do pomiaru odwiedzin i skuteczności reklam. Odmowa nie wpływa na możliwość zakupu. <a class="meta-privacy-link" href="polityka-prywatnosci.html">Polityka prywatności</a>.</p>
+  <div class="meta-consent-actions">
+    <button type="button" onclick="prostowiedzaMetaConsent(true)">Akceptuję</button>
+    <button type="button" onclick="prostowiedzaMetaConsent(false)">Odrzucam</button>
+  </div>
+</div>
 <header class="header"><div class="wrap nav"><a class="brand" href="#start" aria-label="ProstoWiedza — strona główna"><img src="logo.png" alt="ProstoWiedza"></a><nav class="navlinks" aria-label="Menu"><a href="#wnetrze">Zajrzyj do środka</a><a href="#gratisy">Co otrzymasz?</a><a href="#faq">Pytania</a><div class="consent-purchase"><button type="button" class="btn" data-checkout="https://buy.stripe.com/7sY4gy9sNa73crd7VY4wM00" disabled>Kup e-book · 49 zł ↗</button><label class="consent-choice"><input type="checkbox" autocomplete="off"><span>Wyrażam zgodę na rozpoczęcie dostarczania treści cyfrowych przed upływem 14 dni od zawarcia umowy i przyjmuję do wiadomości, że po rozpoczęciu ich dostarczania utracę prawo odstąpienia od umowy. <a href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> · <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityka prywatności</a>.</span></label></div></nav></div></header>
 <main><section class="hero" id="start"><div class="wrap hero-grid"><div><p class="eyebrow">Praktyczny poradnik · Wydanie październik 2026</p><h1>Chcesz stworzyć własnego e-booka i go sprzedawać?<br><em>Zacznij od konkretów, nie obietnic.</em></h1><p class="lead">Nie wiesz, jaki temat wybrać, ile kosztuje sprzedaż i jak dotrzeć do pierwszych klientów? <strong>„E-booki bez ściemy”</strong> prowadzi Cię od sprawdzenia pomysłu, przez kalkulacje i przygotowanie produktu, aż po uruchomienie sprzedaży.</p><div class="hero-actions"><div class="consent-purchase"><button type="button" class="btn" data-checkout="https://buy.stripe.com/7sY4gy9sNa73crd7VY4wM00" disabled>Kup e-book + 3 GRATISY · 49 zł ↗</button><label class="consent-choice"><input type="checkbox" autocomplete="off"><span>Wyrażam zgodę na rozpoczęcie dostarczania treści cyfrowych przed upływem 14 dni od zawarcia umowy i przyjmuję do wiadomości, że po rozpoczęciu ich dostarczania utracę prawo odstąpienia od umowy. <a href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> · <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityka prywatności</a>.</span></label></div><a class="btn btn-outline" href="#wnetrze">Zobacz prawdziwe strony ↓</a></div><p class="trust">91 stron PDF (wraz z okładką i spisem treści) · 9 rozdziałów · Przykłady i karty pracy · 3 materiały GRATIS · Jednorazowy zakup</p></div><div class="hero-art"><div class="halo"></div><img class="book main" src="ebooki-bez-sciemy.png" alt="Oryginalna okładka e-booka E-booki bez ściemy"><img class="book bonus" src="twoj-telefon.png" alt="Oryginalna okładka e-booka Twój telefon wie za dużo — gratis"><div class="pill">E-book + 3 GRATISY · 49 zł</div></div></div></section>
 <section class="section alt" id="problemy"><div class="wrap"><div class="section-heading"><p class="eyebrow">Znasz ten problem?</p><h2>Sam plik PDF nie oznacza jeszcze działającej sprzedaży.</h2><p>Pomysłów na e-booki jest mnóstwo. Trudniej ocenić, czy ktoś za dany temat zapłaci, ile zostanie z każdej transakcji i co trzeba przygotować przed premierą.</p></div><div class="features"><article class="feature"><div class="symbol">01</div><h3>Masz pomysł, ale nie wiesz, czy się sprzeda?</h3><p>Poznasz sposób na sprawdzenie problemu odbiorcy, analizę konkurencji i test zainteresowania przed napisaniem całej książki.</p></article><article class="feature"><div class="symbol">02</div><h3>Nie wiesz, jak policzyć opłacalność?</h3><p>Przejdziesz przez przykładowe kalkulacje ceny, prowizji, reklamy, zwrotów i progu rentowności.</p></article><article class="feature"><div class="symbol">03</div><h3>Nie wiesz, jak zacząć sprzedawać?</h3><p>Dowiesz się, jakie elementy powinien mieć proces zakupu, jak testować dostawę pliku i jak planować mały start.</p></article></div></div></section>
@@ -26,7 +88,7 @@
 <section class="section" id="jak-kupic"><div class="wrap"><div class="section-heading"><p class="eyebrow">Prosty zakup</p><h2>Jak otrzymasz materiały?</h2></div><div class="steps"><div class="step"><div class="num">KROK 01</div><h3>Klikasz „Kup”</h3><p>Przechodzisz do strony płatności Stripe. Cena całego zestawu to 49 zł.</p></div><div class="step"><div class="num">KROK 02</div><h3>Opłacasz zamówienie</h3><p>Podajesz adres e-mail, na który mają trafić linki do pobrania, i wybierasz dostępną metodę płatności.</p></div><div class="step"><div class="num">KROK 03</div><h3>Otrzymujesz 4 pliki</h3><p>Po potwierdzeniu płatności dostajesz e-mail z linkami do dwóch e-booków PDF, arkusza Excel i instrukcji PDF.</p></div></div></div></section>
 <section class="section alt" id="faq"><div class="wrap"><div class="section-heading"><p class="eyebrow">Przed zakupem</p><h2>Najczęstsze pytania</h2></div><div class="faq"><details><summary>Czy poradnik jest dla początkujących?</summary><p>Tak. Książka omawia kolejne etapy przygotowania i sprzedaży e-booka. Nie wymaga wcześniejszego prowadzenia sklepu, ale wymaga samodzielnego wykonania ćwiczeń i weryfikacji decyzji.</p></details><details><summary>Czy e-book gwarantuje zarobki?</summary><p>Nie. Przedstawia metody sprawdzania pomysłu, liczenia kosztów i testowania sprzedaży. Wynik zależy m.in. od produktu, odbiorców, budżetu i sposobu działania.</p></details><details><summary>Co dokładnie otrzymam?</summary><p>Cztery pliki: „E-booki bez ściemy” (PDF), „Twój telefon wie za dużo” (PDF, GRATIS), arkusze A/B/C (Excel, GRATIS) i instrukcję arkuszy (PDF, GRATIS).</p></details><details><summary>Czy to subskrypcja?</summary><p>Nie. To jednorazowy zakup za 49 zł.</p></details><details><summary>Jak otworzyć materiały?</summary><p>E-booki i instrukcję otworzysz w czytniku PDF, np. Adobe Acrobat Reader. Arkusz .xlsx otworzysz w programie obsługującym pliki Excel.</p></details><details><summary>Co zrobić, jeśli nie dotrze wiadomość?</summary><p>Sprawdź folder Spam oraz Oferty. Jeśli wiadomości nadal nie ma, napisz na <a href="mailto:kontakt@prostowiedza.pl">kontakt@prostowiedza.pl</a>, podając adres e-mail użyty przy zakupie. Nie wysyłaj danych karty płatniczej.</p></details></div></div></section>
 <section class="section"><div class="wrap"><div class="cta"><div><p class="eyebrow" style="color:#a9e8b6">ProstoWiedza · E-booki bez ściemy</p><h2>Zamień pomysł na konkretny plan działania.</h2><p>Pełny e-book, rzeczywiste przykłady i ćwiczenia. Dodatkowo trzy materiały GRATIS. Wszystko za 49 zł.</p></div><div class="consent-purchase"><button type="button" class="btn" data-checkout="https://buy.stripe.com/7sY4gy9sNa73crd7VY4wM00" disabled>Kup teraz · 49 zł ↗</button><label class="consent-choice"><input type="checkbox" autocomplete="off"><span>Wyrażam zgodę na rozpoczęcie dostarczania treści cyfrowych przed upływem 14 dni od zawarcia umowy i przyjmuję do wiadomości, że po rozpoczęciu ich dostarczania utracę prawo odstąpienia od umowy. <a href="regulamin.html" target="_blank" rel="noopener">Regulamin</a> · <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityka prywatności</a>.</span></label></div></div></div></section><section class="library" id="biblioteka"><div class="wrap"><div class="library-intro"><div><p class="eyebrow">BIBLIOTEKA PROSTOWIEDZA</p><h2>Więcej tematów.<br>Ta sama prostota.</h2></div><p>Rozwijamy bibliotekę poradników o technologii, bezpieczeństwie, finansach i codzienności. Poniższe tytuły to zapowiedzi — nie są jeszcze dostępne do zakupu.</p></div><div class="library-grid"><article class="library-card"><div class="library-cover mint"><span class="category">AI I TECHNOLOGIA</span><h3>AI bez ściemy</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>AI bez ściemy</h4><p>Sztuczna inteligencja bez technicznego żargonu. Przykłady i prompty do codziennych zadań.</p><span class="soon">Wkrótce w ofercie</span></div></article><article class="library-card"><div class="library-cover blue"><span class="category">AI I TECHNOLOGIA</span><h3>AI – 50 zastosowań</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>AI – 50 zastosowań</h4><p>50 pomysłów na wykorzystanie AI w pracy, domu i organizacji codzienności.</p><span class="soon">Wkrótce w ofercie</span></div></article><article class="library-card"><div class="library-cover sand"><span class="category">BEZPIECZEŃSTWO</span><h3>Nie klikaj, zanim sprawdzisz</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>Nie klikaj, zanim sprawdzisz</h4><p>Jak rozpoznawać podejrzane SMS-y, fałszywe sklepy i próby wyłudzeń.</p><span class="soon">Wkrótce w ofercie</span></div></article><article class="library-card"><div class="library-cover lavender"><span class="category">RODZINA</span><h3>Dziecko w sieci</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>Dziecko w sieci</h4><p>Przewodnik po cyfrowych zagrożeniach, rozmowach i zasadach bezpieczeństwa.</p><span class="soon">Wkrótce w ofercie</span></div></article><article class="library-card"><div class="library-cover mint"><span class="category">CODZIENNOŚĆ</span><h3>Digital Detox</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>Digital Detox</h4><p>Praktyczne sposoby na ograniczenie czasu przed ekranem i odzyskanie uwagi.</p><span class="soon">Wkrótce w ofercie</span></div></article><article class="library-card"><div class="library-cover blue"><span class="category">FINANSE</span><h3>Gdzie uciekają pieniądze</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>Gdzie uciekają pieniądze</h4><p>Jak przejrzeć codzienne wydatki, subskrypcje i drobne koszty.</p><span class="soon">Wkrótce w ofercie</span></div></article><article class="library-card"><div class="library-cover sand"><span class="category">ZAKUPY</span><h3>Nie daj się nabrać na promocję</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>Nie daj się nabrać na promocję</h4><p>Jak analizować oferty, rabaty i mechanizmy zakupowych okazji.</p><span class="soon">Wkrótce w ofercie</span></div></article><article class="library-card"><div class="library-cover lavender"><span class="category">ORGANIZACJA</span><h3>Cyfrowy porządek</h3><span class="imprint">ProstoWiedza</span></div><div class="library-body"><span class="status">W PRZYGOTOWANIU</span><h4>Cyfrowy porządek</h4><p>Prosty system porządkowania plików, kont, zdjęć i dokumentów.</p><span class="soon">Wkrótce w ofercie</span></div></article></div></div></section></main>
-<footer class="footer"><div class="wrap footer-inner"><div><img src="logo.png" alt="ProstoWiedza"><p>Wiedza bez zbędnych komplikacji.</p></div><div><p>Kontakt: <a href="mailto:kontakt@prostowiedza.pl">kontakt@prostowiedza.pl</a></p><p><a href="regulamin.html">Regulamin</a> · <a href="polityka-prywatnosci.html">Polityka prywatności</a></p><p>© 2026 ProstoWiedza</p></div></div></footer><script>
+<footer class="footer"><div class="wrap footer-inner"><div><img src="logo.png" alt="ProstoWiedza"><p>Wiedza bez zbędnych komplikacji.</p></div><div><p>Kontakt: <a href="mailto:kontakt@prostowiedza.pl">kontakt@prostowiedza.pl</a></p><p><a href="regulamin.html">Regulamin</a> · <a href="polityka-prywatnosci.html">Polityka prywatności</a></p><p>© 2026 ProstoWiedza</p><p><a href="#" onclick="prostowiedzaOpenPrivacySettings();return false;">Ustawienia prywatności</a></p></div></div></footer><script>
 document.querySelectorAll('.consent-purchase').forEach(function(group){
  const checkbox=group.querySelector('input[type="checkbox"]');
  const button=group.querySelector('button[data-checkout]');
